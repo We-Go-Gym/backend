@@ -1,0 +1,39 @@
+services:
+  api:
+    build: .
+    container_name: wwg-app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/code/app
+    depends_on:
+      mysql:
+        condition: service_healthy  # espera o MySQL estar saudável
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_NAME=wwgdb
+      - DB_USER=root
+      - DB_PASSWORD=password
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    restart: on-failure
+
+  mysql:
+    image: mysql:8.0
+    container_name: wwg-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: wwgdb
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql-data:
