@@ -1,7 +1,7 @@
 services:
   api:
     build: .
-    container_name: wwg-app
+    container_name: wgg-app
     ports:
       - "8000:8000"
     volumes:
@@ -12,7 +12,7 @@ services:
     environment:
       - DB_HOST=mysql
       - DB_PORT=3306
-      - DB_NAME=wwgdb
+      - DB_NAME=wggdb
       - DB_USER=root
       - DB_PASSWORD=password
     command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
@@ -20,11 +20,11 @@ services:
 
   mysql:
     image: mysql:8.0
-    container_name: wwg-mysql
+    container_name: wgg-mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: wwgdb
+      MYSQL_DATABASE: wggdb
     ports:
       - "3306:3306"
     volumes:
