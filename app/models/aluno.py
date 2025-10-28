@@ -1,9 +1,13 @@
+"""Este módulo define o modelo de dados para o Aluno"""
+# pylint: disable=too-few-public-methods
 from sqlalchemy import Column, Integer, String, Float
 from sqlalchemy.orm import relationship
 from app.database import Base
 
-# Estrutura da tabela Alunos
+
 class Aluno(Base):
+    """Classe que representa um Aluno no banco de dados"""
+
     __tablename__ = 'ALUNO'
 
     id_aluno = Column(Integer, primary_key=True, index=True)
@@ -16,5 +20,12 @@ class Aluno(Base):
 
 
 
-    treinos = relationship("Treino", back_populates="aluno", cascade="all, delete-orphan")
-    historico_imc = relationship("Imc", back_populates="aluno", cascade="all, delete-orphan") 
+    treinos = relationship(
+        "Treino", 
+        back_populates="aluno",
+        cascade="all, delete-orphan")
+
+    historico_imc = relationship(
+        "Imc",
+        back_populates="aluno",
+        cascade="all, delete-orphan")

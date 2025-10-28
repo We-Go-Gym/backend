@@ -1,9 +1,11 @@
-from pydantic import BaseModel, ConfigDict
+"""Este módulo define os schemas pydantic para a entidade Aluno"""
+# pylint: disable=too-few-public-methods
 from typing import List, Optional
+from pydantic import BaseModel, ConfigDict
 
 
-# Classe para criação de um novo aluno
 class AlunoCreate(BaseModel):
+    """Schema pydantic para a criação de um novo aluno"""
     nome_aluno: str
     email: str
     senha: str
@@ -13,15 +15,16 @@ class AlunoCreate(BaseModel):
 
 
 class AlunoUpdate(BaseModel):
+    """Schema pydantic para a atualização de um aluno existente"""
     nome_aluno: Optional[str] = None
     email: Optional[str] = None
-    senha: Optional[str] = None  # Senha em texto plano (opcional)
+    senha: Optional[str] = None  # senha em texto(opcional)
     idade: Optional[int] = None
     peso_kg: Optional[float] = None
     altura: Optional[float] = None
 
-# Classe  de um aluno (inclui o id do banco)
 class Aluno(BaseModel):
+    """Schema pydantic para a leitura/retorno de um aluno (inclui o id do banco)"""
     id_aluno: int
     nome_aluno: str
     email: str
@@ -29,8 +32,8 @@ class Aluno(BaseModel):
     peso_kg: float
     altura: float
 
-    treinos: List['Treino'] = [] 
+    treinos: List['Treino'] = []
     historico_imc: List['Imc'] = []
 
-    # Permite converter direto do modelo SQLAlchemy -> Pydantic
+    # Permite converter direto do modelo SQLAlchemy -> pydantic
     model_config = ConfigDict(from_attributes=True)

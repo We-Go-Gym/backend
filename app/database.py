@@ -1,9 +1,14 @@
+"""Módulo para configuração do banco de dados e gerenciamento da sessão"""
+# pylint: disable=import-error,unused-import,invalid-name
+
+import os
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker
-import os
 
-#OBS: Ele está no modo SQLITE para ativar o mysql para o docker, comente a linha 7 e descomente da 8 até a 17
+
+#OBS: Está no modo SQLITE para ativar o mysql para o docker comente a l-7 e descomente da 8 até a 17
 engine = create_engine("sqlite:///fastapidb.db")
 # DB_USER = os.getenv("DB_USER", "root")
 # DB_PASSWORD = os.getenv("DB_PASSWORD", "password")
@@ -15,12 +20,13 @@ engine = create_engine("sqlite:///fastapidb.db")
 # SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 # engine = create_engine(SQLALCHEMY_DATABASE_URL)
-Base = declarative_base()
 
+Base = declarative_base()
 SessionLocal = sessionmaker(bind=engine, expire_on_commit=False)
 
 #Iniciar a sessão
 def get_session():
+    """Dependência do FastAPI para injetar uma sessão de banco de dados"""
     session = SessionLocal()
     try:
         yield session

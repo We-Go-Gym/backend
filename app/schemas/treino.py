@@ -1,23 +1,25 @@
+"""Este módulo define os schemas pydantic para a entidade Treino"""
+# pylint: disable=too-few-public-methods
+from typing import List
 from pydantic import BaseModel, ConfigDict
-from typing import List, Optional
 from .exercicio import Exercicio
 
-# Classe para criação de um novo treino
 class TreinoCreate(BaseModel):
+    """Schema pydantic para a criação de um novo treino"""
     nome_treino: str
     descricao_treino: str
     categoria: str
     num_series: int
-    id_aluno: int 
+    id_aluno: int
 
-# Classe para retornar os dados de um treino
 class Treino(BaseModel):
+    """Schema pydantic para a leitura/retorno de um treino (inclui o id do banco)"""
     id_treino: int
     nome_treino: str
     descricao_treino: str
     categoria: str
     num_series: int
-    id_aluno: int 
+    id_aluno: int
 
     exercicios: List[Exercicio] = []
 

@@ -1,10 +1,14 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey
+"""Este módulo define o modelo de dados para o Treino"""
+# pylint: disable=too-few-public-methods
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from app.database import Base
 from .exercicio import treino_exercicio_associacao
 
-# Estrutura da tabela Treino
+
 class Treino(Base):
+    """Classe que representa um IMC no banco de dados"""
+
     __tablename__ = 'TREINO'
 
     id_treino = Column(Integer, primary_key=True, index=True)
@@ -13,7 +17,13 @@ class Treino(Base):
     categoria= Column(String(256), nullable=False)
     num_series = Column(Integer, nullable=False)
     id_aluno = Column(Integer, ForeignKey('ALUNO.id_aluno'), nullable=False)
-    
 
-    aluno = relationship("Aluno", back_populates="treinos")
-    exercicios = relationship("Exercicio",secondary=treino_exercicio_associacao,back_populates="treinos")
+
+    aluno = relationship(
+        "Aluno",
+        back_populates="treinos")
+
+    exercicios = relationship(
+        "Exercicio",
+        secondary=treino_exercicio_associacao,
+        back_populates="treinos")

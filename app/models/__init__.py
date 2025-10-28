@@ -1,5 +1,5 @@
-
-from .aluno import Aluno 
+"""Arquivo de inicialização do módulo models."""
+from .aluno import Aluno
 from .treino import Treino
 from .imc import Imc
 from .exercicio import Exercicio

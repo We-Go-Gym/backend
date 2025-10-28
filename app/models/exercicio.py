@@ -1,4 +1,6 @@
-from sqlalchemy import Column, Integer, String, Float, Table, ForeignKey
+"""Este módulo define o modelo de dados para o Exercicio"""
+# pylint: disable=too-few-public-methods
+from sqlalchemy import Column, Integer, String, Table, ForeignKey
 from sqlalchemy.orm import relationship
 from app.database import Base
 
@@ -10,6 +12,8 @@ treino_exercicio_associacao = Table('TREINO_POSSUI_EXERCICIO', Base.metadata,
 
 # Estrutura da tabela Exercicio
 class Exercicio(Base):
+    """Classe que representa um Exercício no banco de dados"""
+
     __tablename__ = 'EXERCICIO'
 
     id_exercicio = Column(Integer, primary_key=True, index=True)
@@ -17,5 +21,8 @@ class Exercicio(Base):
     descricao_exercicio = Column(String(256),nullable=False, unique=True)
     num_repeticoes = Column(Integer, nullable=False)
 
-    
-    treinos = relationship("Treino",secondary=treino_exercicio_associacao,back_populates="exercicios")
+
+    treinos = relationship(
+        "Treino",
+        secondary=treino_exercicio_associacao,
+        back_populates="exercicios")
