@@ -17,8 +17,8 @@ class Exercicio(Base):
     __tablename__ = 'EXERCICIO'
 
     id_exercicio = Column(Integer, primary_key=True, index=True)
-    nome_exercicio = Column(String(256), nullable=False)
-    descricao_exercicio = Column(String(256),nullable=False, unique=True)
+    nome_exercicio = Column(String(256), nullable=False,unique=True)
+    descricao_exercicio = Column(String(256),nullable=False)
     num_repeticoes = Column(Integer, nullable=False)
 
 
