@@ -89,7 +89,7 @@ def update_aluno(id_aluno: int, aluno_update: AlunoUpdate, session: Session = De
     return aluno_db
 
 @router.delete("/{id_aluno}" , status_code=status.HTTP_204_NO_CONTENT)
-def delete_book(id_aluno: int ,session: Session = Depends(get_session) ):
+def delete_aluno(id_aluno: int ,session: Session = Depends(get_session) ):
     """Deleta os dados deum aluno do banco de dados"""
     aluno_db = session.query(Aluno).get(id_aluno)
     if aluno_db :
