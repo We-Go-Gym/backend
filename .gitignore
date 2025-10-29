@@ -1,3 +1,5 @@
 __pycache__
 fastapidb.db
+test.db
 /OLD
+/.pytest_cache
