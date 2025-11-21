@@ -3,3 +3,7 @@ fastapidb.db
 test.db
 /OLD
 /.pytest_cache
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
