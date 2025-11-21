@@ -6,3 +6,4 @@ cryptography
 passlib
 bcrypt
 pylint
+python-jose[cryptography]
