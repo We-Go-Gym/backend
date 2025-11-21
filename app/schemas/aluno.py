@@ -8,7 +8,7 @@ class AlunoCreate(BaseModel):
     """Schema pydantic para a criação de um novo aluno"""
     nome_aluno: str
     email: str
-    senha: str
+    #senha: str
     idade: int
     peso_kg: float
     altura: float
@@ -18,7 +18,7 @@ class AlunoUpdate(BaseModel):
     """Schema pydantic para a atualização de um aluno existente"""
     nome_aluno: Optional[str] = None
     email: Optional[str] = None
-    senha: Optional[str] = None  # senha em texto(opcional)
+    #senha: Optional[str] = None
     idade: Optional[int] = None
     peso_kg: Optional[float] = None
     altura: Optional[float] = None

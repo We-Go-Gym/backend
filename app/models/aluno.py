@@ -13,7 +13,7 @@ class Aluno(Base):
     id_aluno = Column(Integer, primary_key=True, index=True)
     nome_aluno = Column(String(256), nullable=False)
     email = Column(String(256),nullable=False, unique=True)
-    senha_hash = Column(String(256), nullable=False) # salva o hash da senha
+    #senha_hash = Column(String(256), nullable=False)
     idade = Column(Integer, nullable=False)
     peso_kg = Column(Float,nullable=False)
     altura = Column(Float,nullable=False)
