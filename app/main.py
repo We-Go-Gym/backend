@@ -8,7 +8,7 @@ from app.models import Aluno, Treino, Imc, Exercicio
 from app.routes import rota_aluno, rota_treino, rota_imc, rota_exercicio
 
 # Cria as tabelas no banco
-Base.metadata.create_all(engine)
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="API de Alunos e Fitness",

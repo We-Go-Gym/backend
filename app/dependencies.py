@@ -10,9 +10,10 @@ from app.models import Aluno
 # Pega a chave secreta do ambiente
 SECRET_KEY = os.getenv("AUTH_SECRET_KEY", "supersecret_dev_key_wgg")
 ALGORITHM = "HS256"
+AUTH_SERVICE_URL = os.getenv("AUTH_SERVICE_URL", "http://localhost:8001")
 
-# Aponta para a URL de login da API de Auth
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="http://localhost:8001/login")
+# Aponta para a URL dinâmica
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{AUTH_SERVICE_URL}/login")
 
 def get_aluno_atual(token: str = Depends(oauth2_scheme), session: Session = Depends(get_session)):
     """Valida o token e retorna o aluno correspondente do banco de dados"""

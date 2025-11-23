@@ -7,19 +7,17 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+# Chama a base de dados para testar tanto no deploy quanto no docker
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    os.getenv("DATABASE_URL_API", "mysql+pymysql://root:password@mysql:3306/wggdb")
+)
 
-#OBS: Está no modo SQLITE para ativar o mysql para o docker comente a l-7 e descomente da 8 até a 17
-#engine = create_engine("sqlite:///fastapidb.db")
-DB_USER = os.getenv("DB_USER", "root")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "password")
-DB_HOST = os.getenv("DB_HOST", "localhost")
-DB_PORT = os.getenv("DB_PORT", "3306")
-DB_NAME = os.getenv("DB_NAME", "wggdb")
+# Correção da rota pro railway
+if DATABASE_URL.startswith("mysql://"):
+    DATABASE_URL = DATABASE_URL.replace("mysql://", "mysql+pymysql://")
 
-# #Chama a base de dados
-SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 
 Base = declarative_base()
 SessionLocal = sessionmaker(bind=engine, expire_on_commit=False)
