@@ -1,10 +1,16 @@
 """Configurações e fixtures globais para os testes"""
-# pylint: disable=redefined-outer-name, invalid-name
+# pylint: disable=redefined-outer-name, invalid-name, wrong-import-position
+import os
+from datetime import date
 import pytest
 from sqlalchemy import create_engine, StaticPool
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.schema import ColumnDefault
 from starlette.testclient import TestClient
 
+# Forçar as váriáveis de ambiente antes do app
+os.environ["DATABASE_URL"] = "sqlite:///./test_temp.db"
+os.environ["DATABASE_URL_APP"] = "sqlite:///./test_temp.db"
 
 from app.main import app
 from app.database import Base, get_session
@@ -15,7 +21,7 @@ SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
     connect_args={"check_same_thread": False},
-    #  StaticPool para garantir que o FastAPI e o Pytest usem o mesmo banco em memória.
+    #  StaticPool para garantir que o FastAPI e o Pytest usem o mesmo banco em memória
     poolclass=StaticPool,
 )
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -23,9 +29,21 @@ TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engin
 
 @pytest.fixture(scope="function")
 def db_session():
-    """ Roda para cada teste,
-    cria tabelas, cede a sessão, e dropa tabelas
     """
+    Aplica o Patch no modelo IMC para funcionar no SQLite antes de criar tabelas.
+    """
+
+    imc_table = Base.metadata.tables.get("IMC")
+
+    if imc_table is not None:
+        coluna_data = imc_table.c.dt_calculo
+        coluna_data.server_default = None
+
+        # Adiciona  o defaul para a coluna data
+        if coluna_data.default is None:
+            coluna_data.default = ColumnDefault(date.today)
+
+
     Base.metadata.create_all(bind=engine)
     db = TestingSessionLocal()
     try:
@@ -65,7 +83,6 @@ def aluno_cadastrado(client):
         json={
             "nome_aluno": "Aluno Padrão",
             "email": "aluno@email.com",
-            "senha": "senha123",
             "idade": 25,
             "peso_kg": 75.0,
             "altura": 1.75,

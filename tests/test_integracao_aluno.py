@@ -11,7 +11,6 @@ def test_create_aluno(client):
         json={
             "nome_aluno": "Aluno Teste Create",
             "email": "create@email.com",
-            "senha": "senha123",
             "idade": 30,
             "peso_kg": 80.0,
             "altura": 1.80,
@@ -88,7 +87,6 @@ def test_update_aluno_nao_encontrado(client):
             {
                 # "nome_aluno": "Faltando",
                 "email": "teste@email.com",
-                "senha": "123",
                 "idade": 20,
                 "peso_kg": 70,
                 "altura": 1.70,
@@ -99,18 +97,6 @@ def test_update_aluno_nao_encontrado(client):
             {
                 "nome_aluno": "Aluno",
                 # "email": "faltando@email.com",
-                "senha": "123",
-                "idade": 20,
-                "peso_kg": 70,
-                "altura": 1.70,
-            },
-        ),
-        (
-            "senha",
-            {
-                "nome_aluno": "Aluno",
-                "email": "teste@email.com",
-                # "senha": "faltando",
                 "idade": 20,
                 "peso_kg": 70,
                 "altura": 1.70,
